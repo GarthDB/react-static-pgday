@@ -1,7 +1,8 @@
 var path = require('path')
 var webpack = require('webpack')
-var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
 var data = require('./data')
+var autoprefixer = require('autoprefixer')
 
 module.exports = {
   entry: {
@@ -35,9 +36,12 @@ module.exports = {
       },
       {
         test: /\.styl$/,
-        loader: 'css-loader!stylus-loader'
+        loader: 'postcss-loader!css-loader!stylus-loader'
       }
     ]
+  },
+  postcss: function () {
+    return [autoprefixer];
   },
   plugins: [
     new StaticSiteGeneratorPlugin('main', data.routes(), data)
